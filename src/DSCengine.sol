@@ -16,9 +16,17 @@ contract DSCengine {
     constructor() {}
 
     // Deposit the collateral in exchange of minted DSC
+   
     function depositCollateralAndMintDsc() external {}
-
-    function depositCollateral() external {}
+    /*
+     * @notice Follow CEI
+     * @param  tokenCollaternalAddress the address of the token to deposit as collateral
+     * @param  amountCollateral the amount of collateral to deposit
+     */
+    function depositCollateral(
+        address tokenCollateralAddress,
+        uint256 amountCollateral
+    ) external {}
 
     function redeemCollateralForDsc() external {}
 
