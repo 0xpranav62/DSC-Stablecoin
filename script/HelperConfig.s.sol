@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity^0.8.18;
+
 import {Test} from "forge-std/Test.sol";
 import {MockV3Aggregator} from "../test/Mocks/MockV3Aggregator.sol";
 import {ERC20Mock} from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
@@ -24,7 +25,7 @@ contract HelperConfig is Test {
         }
     }
 
-    NetworkConfig activeNetworkConfig;
+    NetworkConfig  public activeNetworkConfig;
     function getSepoliaConfig() public view returns(NetworkConfig memory) {
         NetworkConfig memory sepoliaNetworkConfig = NetworkConfig({
             wethUsdPriceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306, // ETH / USD
@@ -43,18 +44,18 @@ contract HelperConfig is Test {
         vm.startBroadcast();
         MockV3Aggregator ethUsdPriceFeed = new MockV3Aggregator(DECIMALS,ETH_USD);
 
-        ERC20Mock wethPriceFeed = new ERC20Mock();
+        ERC20Mock wethMock = new ERC20Mock("WETH", "WETH", msg.sender, 1000e8);
 
         MockV3Aggregator btcUsdPriceFeed = new MockV3Aggregator(DECIMALS, BTC_USD);
 
-        ERC20Mock wbtcPriceFeed = new ERC20Mock();
+        ERC20Mock wbtcMock = new ERC20Mock("WBTC", "WBTC", msg.sender, 1000e8);
         vm.stopBroadcast();
         
         NetworkConfig memory  anvilNetworkConfig = NetworkConfig({
             wethUsdPriceFeed: address(ethUsdPriceFeed), // ETH / USD
             wbtcUsdPriceFeed: address(btcUsdPriceFeed),
-            wETH: address(wethPriceFeed),
-            wBTC: address(wbtcPriceFeed),
+            wETH: address(wethMock),
+            wBTC: address(wbtcMock),
             deployerKey: DEFAULT_ANVIL_PRIVATE_KEY
         });
 

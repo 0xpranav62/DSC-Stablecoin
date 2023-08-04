@@ -30,8 +30,7 @@ contract DSCengine is ReentrancyGuard {
 
     mapping(address token => address priceFeed) private s_priceFeeds;
     DecentrailizedStablecoin private immutable i_dsc;
-    mapping(address user => mapping(address token => uint256 amount))
-        private s_collateralDeposit;
+    mapping(address user => mapping(address token => uint256 amount)) private s_collateralDeposit;
     mapping(address user => uint256 dscAmount) private s_DSCminted;
     address[] private s_collateralTokens;
 
@@ -344,8 +343,7 @@ contract DSCengine is ReentrancyGuard {
         );
         (, int256 price, , , ) = priceFeed.latestRoundData();
 
-        uint256 tokenAmount = ((amount * PRECISION_VALUE) / uint256(price)) *
-            ADDITIONAL_PRECISION_VALUE;
+        uint256 tokenAmount = (amount * PRECISION_VALUE) / (uint256(price) * ADDITIONAL_PRECISION_VALUE);
         return tokenAmount;
     }
 
